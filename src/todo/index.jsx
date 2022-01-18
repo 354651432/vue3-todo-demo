@@ -1,5 +1,3 @@
-import { ref } from "vue"
-
 export default {
     compactConfig: {
         MODE: 2,
@@ -14,7 +12,7 @@ export default {
         add() {
             const item = { name: this.name, status: 0 }
             const ret = this.tasks.push(item)
-            console.log("click")
+            console.log("click name is ", this.name)
         },
         complete(item) {
             this.tasks.map(it => {
