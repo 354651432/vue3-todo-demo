@@ -1,0 +1,8 @@
+* vue3 todo demo [3/7]
+- [X] vue3ify
+- [X] animated `animate.css` and transition
+- [X] iconify font-awesome
+- [ ] go backend
+- [ ] rust backend
+- [ ] springboot backend
+- [ ] git submodule
