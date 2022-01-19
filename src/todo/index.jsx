@@ -1,43 +1,32 @@
+import { ref } from "vue"
+
+const Status = (props, ctx) => < >
+    {props.status == 0 ?
+        <button class={props.class} onClick={props.onClick}>complete</button> :
+        <span>completed</span>
+    }
+</>
+
 export default {
-    compactConfig: {
-        MODE: 2,
-    },
-    data() {
-        return {
-            name: "",
-            tasks: []
-        }
-    },
-    methods: {
-        add() {
-            const item = { name: this.name, status: 0 }
-            const ret = this.tasks.push(item)
-            console.log("click name is ", this.name)
-        },
-        complete(item) {
-            this.tasks.map(it => {
-                if (it == item) {
-                    it.status = 1
-                }
-            })
-        },
-        remove(item) {
-            this.tasks = this.tasks.filter(it => it != item)
-        }
-    },
-    render() {
-        return <main class="container mt-4 py-3 card">
+    setup() {
+        const tasks = ref([])
+        const name = ref("")
+        const remove = item => () => tasks.value = tasks.value.filter(it => it != item)
+        const complete = item => () => item.status = 1
+        const add = () => tasks.value.push({ name: name.value, status: 0 })
+
+        return () => <main class="container mt-4 py-3 card">
             <div class="input-group">
-                <input class="form-control" type="text" vModel={this.name} />
-                <button class="btn btn-outline-primary" onClick={this.add} >add task</button>
+                <input class="form-control" type="text" vModel={name.value} />
+                <button class="btn btn-outline-primary" onClick={add} >add task</button>
             </div>
-            <h5 className="mt-3">tasks</h5>
-            <ul className="list-group">
-                {this.tasks.map(it => <li className="list-group-item d-flex justify-content-between">
+            <h5 class="mt-3">tasks</h5>
+            <ul class="list-group">
+                {tasks.value.map((it, key) => <li class="list-group-item d-flex justify-content-between" key={key}>
                     {it.name}
-                    <div className="btn-group btn-group-sm">
-                        <button class="btn btn-primary" onClick={this.complete(it)}>complete</button>
-                        <button class="btn btn-danger" onClick={this.remove(it)}>delete</button>
+                    <div class="btn-group btn-group-sm">
+                        <Status class="btn btn-primary" status={it.status} onClick={complete(it)}>delete</Status>
+                        <button class="btn btn-danger" onClick={remove(it)}>delete</button>
                     </div>
                 </li>)}
             </ul>

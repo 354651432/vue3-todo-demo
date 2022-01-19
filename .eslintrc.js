@@ -14,7 +14,8 @@ module.exports = {
         "vue/no-unused-components": "warn",
         "no-unused-vars": "warn",
         "no-unreachable": "off",
-        "no-mixed-spaces-and-tabs":"off",
-        "vue/require-v-for-key":"warn"
+        "no-mixed-spaces-and-tabs": "off",
+        "vue/require-v-for-key": "warn",
+        "no-undef": "off"
     }
 }
