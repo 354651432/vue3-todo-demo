@@ -10,6 +10,7 @@ const Status = (props, ctx) => < >
 </>
 
 export default {
+    name: "todo",
     setup() {
         const tasks = ref([])
         const name = ref("")

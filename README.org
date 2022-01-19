@@ -2,6 +2,8 @@
 - [X] vue3ify
 - [X] animated `animate.css` and transition
 - [X] iconify font-awesome
+  https://fontawesome.com/v5.15/
+  
 - [ ] go backend
 - [ ] rust backend
 - [ ] springboot backend
