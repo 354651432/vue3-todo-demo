@@ -1,4 +1,5 @@
-import { ref, TransitionGroup, Transition, computed } from "vue"
+import { ref, TransitionGroup, Transition, computed, onMounted } from "vue"
+import * as api from "../api.js"
 
 const Status = (props, ctx) => < >
     <Transition enterActiveClass="animated fadeIn" mode="out-in">
@@ -15,14 +16,27 @@ export default {
         const tasks = ref([])
         const name = ref("")
         const showType = ref(0)
-        const remove = item => () => tasks.value = tasks.value.filter(it => it != item)
-        const complete = item => () => item.status = 1
-        const add = () => {
+        const remove = item => async () => {
+            await api.remove(item)
+            load()
+        }
+
+        const complete = item => async () => {
+            await api.complete(item)
+            load()
+        }
+
+        const add = async () => {
             if (name.value != "") {
-                tasks.value.push({ name: name.value, status: 0 })
+                await api.add({ name: name.value, status: 0 })
                 name.value = ""
+                load()
             }
         }
+        const load = async () => {
+            tasks.value = await api.list()
+        }
+        onMounted(load)
 
         const filteredTasks = computed(() =>
             tasks.value.filter(it => {
