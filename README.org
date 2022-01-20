@@ -8,3 +8,7 @@
 - [ ] rust backend
 - [ ] springboot backend
 - [X] git submodule
+  #+begin_src shell
+    git submodule add ./go-backend # add 
+    git submodule update --init # sync data on submodule
+  #+end_src
