@@ -1,4 +1,4 @@
-import { ref, TransitionGroup, Transition } from "vue"
+import { ref, TransitionGroup, Transition, computed } from "vue"
 
 const Status = (props, ctx) => < >
     <Transition enterActiveClass="animated fadeIn" mode="out-in">
@@ -14,6 +14,7 @@ export default {
     setup() {
         const tasks = ref([])
         const name = ref("")
+        const showType = ref(0)
         const remove = item => () => tasks.value = tasks.value.filter(it => it != item)
         const complete = item => () => item.status = 1
         const add = () => {
@@ -23,14 +24,29 @@ export default {
             }
         }
 
+        const filteredTasks = computed(() =>
+            tasks.value.filter(it => {
+                if (showType.value == 0) {
+                    return true
+                }
+
+                return it.status == 0
+            }))
+
         return () => <main class="container mt-4 py-3 card">
             <div class="input-group">
                 <input class="form-control" type="text" vModel={name.value} />
                 <button class="btn btn-primary" onClick={add} ><i class="fa fa-plus align-middle" /></button>
             </div>
-            <h5 class="mt-3">tasks</h5>
+            <div class="mt-3 d-flex justify-content-between">
+                <h5>tasks</h5>
+                <label>
+                    <input type="checkbox" class="form-check-input" checked={showType.value == 0} onInput={(arg) => {
+                        showType.value = !arg.target.checked * 1
+                    }} />show all</label>
+            </div>
             <TransitionGroup class="list-group" enterActiveClass="animated fadeIn" leaveActiveClass="animated fadeOutLeft" tag="ul">
-                {tasks.value.map((it, key) =>
+                {filteredTasks.value.map((it, key) =>
                     <li class="list-group-item d-flex justify-content-between" key={key}>
                         {it.name}
                         <div class="btn-group btn-group-sm d-flex align-items-center">
