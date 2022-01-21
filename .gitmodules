@@ -1,3 +1,3 @@
 [submodule "go-backend"]
 	path = go-backend
-	url = ./go-backend/
+	url = https://github.com/354651432/vue3-todo-demo-go
